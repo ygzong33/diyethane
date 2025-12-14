@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html lang="tr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Diyet Takip Paneli</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4CAF50",
+                        "background-light": "#F7F8FC",
+                        "background-dark": "#101828",
+                        "text-light": "#333333",
+                        "text-dark": "#F5F5F5",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#1D2939",
+                        "accent": "#FF7043",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="font-display bg-background-light dark:bg-background-dark">
+    <div class="relative min-h-screen w-full flex-col pb-28">
+        <!-- Top App Bar -->
+        <header
+            class="sticky top-0 z-10 flex items-center bg-background-light/80 dark:bg-background-dark/80 p-4 backdrop-blur-sm">
+            <div class="flex size-12 shrink-0 items-center justify-start">
+                <img id="userAvatar" class="size-10 rounded-full" alt="User profile picture"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwhIn_qW3Wl85JHIZxdxE7-ic93AckD4h4RFSkPDrudebuOGFNd3JYltQf3HdQnSmkVMNrigR1TvznH2zyJ-eFzujOFrk7LSl9R-2E5j1_VFQGQfj3-0mEFZv2bSDgP4VAiSvXB61pFzrcPbhN1Xhm0EjIiQ_Og1JzDeHdg2jC4aYmwGk-XxfjAb8fU4x9veHVXzuWl4qr9UBmQ1ixJtV4GVGYCvFzqiUhuGzodj3dxbei04g08QzdgPJfO-dCi-4np0FODQB1Zz3b" />
+            </div>
+            <div class="flex-1">
+                <h2 id="userName" class="text-text-light dark:text-text-dark text-lg font-bold leading-tight">Merhaba!
+                </h2>
+                <p id="currentDate" class="text-sm text-gray-500 dark:text-gray-400">24 Ekim 2023</p>
+            </div>
+            <div class="flex items-center justify-end">
+                <button
+                    class="flex items-center justify-center size-10 rounded-full text-text-light dark:text-text-dark hover:bg-gray-200 dark:hover:bg-gray-700">
+                    <span class="material-symbols-outlined">notifications</span>
+                </button>
+            </div>
+        </header>
+        <main class="flex flex-col gap-6 p-4">
+            <!-- Primary Calorie Tracker Card -->
+            <section class="flex flex-col gap-4 rounded-xl bg-card-light dark:bg-card-dark p-6 shadow-sm">
+                <h1 class="text-text-light dark:text-text-dark text-xl font-bold">Bugünkü Kalori Durumun</h1>
+                <div class="relative flex items-center justify-center w-48 h-48 mx-auto">
+                    <svg class="w-full h-full" viewbox="0 0 100 100">
+                        <!-- Background circle -->
+                        <circle class="text-gray-200 dark:text-gray-700" cx="50" cy="50" fill="transparent" r="45"
+                            stroke="currentColor" stroke-width="10"></circle>
+                        <!-- Progress circle -->
+                        <circle id="calorieCircle" class="text-primary" cx="50" cy="50" fill="transparent" r="45"
+                            stroke="currentColor" stroke-dasharray="282.6" stroke-dashoffset="84.78"
+                            stroke-linecap="round" stroke-width="10" transform="rotate(-90 50 50)"></circle>
+                    </svg>
+                    <div class="absolute flex flex-col items-center justify-center">
+                        <span id="remainingCalories" class="text-3xl font-extrabold text-primary">1500</span>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">kalan</span>
+                    </div>
+                </div>
+                <div class="flex justify-around text-center">
+                    <div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Alınan</p>
+                        <p id="consumedCalories" class="font-bold text-text-light dark:text-text-dark">1250</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Hedef</p>
+                        <p id="targetCalories" class="font-bold text-text-light dark:text-text-dark">2750</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Yakılan</p>
+                        <p id="burnedCalories" class="font-bold text-text-light dark:text-text-dark">450</p>
+                    </div>
+                </div>
+                <!-- Macronutrient Breakdown -->
+                <div class="flex flex-col gap-4 pt-4 mt-4 border-t border-gray-200 dark:border-gray-700">
+                    <div class="flex flex-col gap-1">
+                        <div class="flex justify-between text-sm">
+                            <p class="font-medium text-text-light dark:text-text-dark">Protein</p>
+                            <p class="text-gray-500 dark:text-gray-400"><span id="proteinCurrent">80</span>g / <span
+                                    id="proteinTarget">120</span>g</p>
+                        </div>
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                            <div id="proteinBar" class="bg-primary h-2 rounded-full" style="width: 66%"></div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <div class="flex justify-between text-sm">
+                            <p class="font-medium text-text-light dark:text-text-dark">Karbonhidrat</p>
+                            <p class="text-gray-500 dark:text-gray-400"><span id="carbsCurrent">150</span>g / <span
+                                    id="carbsTarget">200</span>g</p>
+                        </div>
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                            <div id="carbsBar" class="bg-primary h-2 rounded-full" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <div class="flex justify-between text-sm">
+                            <p class="font-medium text-text-light dark:text-text-dark">Yağ</p>
+                            <p class="text-gray-500 dark:text-gray-400"><span id="fatCurrent">40</span>g / <span
+                                    id="fatTarget">60</span>g</p>
+                        </div>
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                            <div id="fatBar" class="bg-primary h-2 rounded-full" style="width: 66%"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Secondary Metric Cards -->
+            <div class="grid grid-cols-2 gap-4">
+                <!-- Diet Progress -->
+                <div class="flex flex-col gap-2 rounded-xl bg-card-light dark:bg-card-dark p-4 shadow-sm col-span-2">
+                    <p class="font-medium text-text-light dark:text-text-dark">Diyet İlerlemen</p>
+                    <div class="flex justify-between items-baseline">
+                        <p id="currentWeight" class="text-2xl font-bold text-text-light dark:text-text-dark">75kg</p>
+                        <p class="text-sm font-medium text-primary">Hedef: <span id="targetWeight">70kg</span></p>
+                    </div>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                        <div id="weightProgress" class="bg-primary h-2.5 rounded-full" style="width: 50%"></div>
+                    </div>
+                </div>
+                <!-- Water Intake -->
+                <div class="flex flex-col gap-3 rounded-xl bg-card-light dark:bg-card-dark p-4 shadow-sm items-center">
+                    <span class="material-symbols-outlined text-primary text-3xl">water_drop</span>
+                    <p class="font-bold text-lg text-text-light dark:text-text-dark">Su Tüketimi</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400"><span id="waterCurrent">6</span> / <span
+                            id="waterTarget">8</span> Bardak</p>
+                </div>
+                <!-- Burned Calories -->
+                <div class="flex flex-col gap-3 rounded-xl bg-card-light dark:bg-card-dark p-4 shadow-sm items-center">
+                    <span class="material-symbols-outlined text-accent text-3xl">local_fire_department</span>
+                    <p class="font-bold text-lg text-text-light dark:text-text-dark">Yakılan Kalori</p>
+                    <p id="burnedCaloriesCard" class="text-sm text-gray-500 dark:text-gray-400">450 kcal</p>
+                </div>
+            </div>
+            <!-- Rewards/Achievements Section -->
+            <div class="p-0 @container">
+                <div
+                    class="flex flex-col items-stretch justify-start rounded-xl @md:flex-row @md:items-center shadow-sm bg-card-light dark:bg-card-dark overflow-hidden">
+                    <div class="w-full @md:w-1/3 bg-center bg-no-repeat aspect-video @md:aspect-square bg-cover"
+                        alt="Golden medal with a green ribbon"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDnvffYLe8radjmFoQtt9Infa2lTNf-mGZssbWTbMSGqAS0D1r02_j_32F3YeCpaRnBf73jI1Qo4AVN2FNsK6QZkwSLdWeDNrrPvFvEm2t4tM5srysO88EmHA_83MTVwZJaTsmNiA-lz4DluL-MLa082daJBVEz2g4ozqIM87fw-0rVSQay3ysGR910TkhlgyI1Tl9KOCm1na6H0IOKBl5a4xSLUdqwl-5bfAGgEED_HUs9U4-zgUR-TxIKwC5fkbXjPYZZoYggfZuk');">
+                    </div>
+                    <div class="flex w-full grow flex-col items-stretch justify-center gap-2 p-4 @md:p-6">
+                        <p
+                            class="text-text-light dark:text-text-dark text-lg font-bold leading-tight tracking-[-0.015em]">
+                            Sıradaki Ödülün</p>
+                        <p class="text-gray-600 dark:text-gray-300 text-base font-normal leading-normal">3 gün üst üste
+                            hedefe ulaş!</p>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">Hedefine
+                            ulaştığında bu rozeti kazanacaksın.</p>
+                        <div class="flex pt-2">
+                            <button onclick="window.location.href='rewards.html'"
+                                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary/20 text-primary text-sm font-medium leading-normal hover:bg-primary/30">
+                                <span class="truncate">Tüm Başarımlar</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- Quick Add FAB -->
+        <div class="fixed bottom-24 right-4 z-20">
+            <button onclick="window.location.href='meal-add.html'"
+                class="flex items-center justify-center size-14 rounded-full bg-accent text-white shadow-lg hover:bg-accent/90">
+                <span class="material-symbols-outlined !text-4xl"
+                    style="font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 48;">add</span>
+            </button>
+        </div>
+        <!-- Bottom Navigation Bar -->
+        <nav
+            class="fixed bottom-0 left-0 right-0 z-10 flex h-20 items-center justify-around border-t border-gray-200 dark:border-gray-700 bg-card-light dark:bg-card-dark">
+            <a class="flex flex-col items-center gap-1 text-primary" href="dashboard.html">
+                <span class="material-symbols-outlined">home</span>
+                <span class="text-xs font-bold">Anasayfa</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary"
+                href="meal-add.html">
+                <span class="material-symbols-outlined">restaurant_menu</span>
+                <span class="text-xs">Yemek Ekle</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary"
+                href="diet-plan.html">
+                <span class="material-symbols-outlined">bar_chart</span>
+                <span class="text-xs">İlerleme</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary"
+                href="profile.html">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-xs">Profil</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
+
+        // Initialize user data
+        function initializeUserData() {
+            const userName = localStorage.getItem('userName') || 'Kullanıcı';
+            document.getElementById('userName').textContent = `Merhaba, ${userName}!`;
+
+            // Set current date
+            const today = new Date();
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            document.getElementById('currentDate').textContent = today.toLocaleDateString('tr-TR', options);
+
+            // Load saved data or use defaults
+            loadCalorieData();
+        }
+
+        function loadCalorieData() {
+            // Get saved data or use defaults
+            const consumed = parseInt(localStorage.getItem('consumedCalories')) || 1250;
+            const target = parseInt(localStorage.getItem('targetCalories')) || 2750;
+            const burned = parseInt(localStorage.getItem('burnedCalories')) || 450;
+            const remaining = target - consumed + burned;
+
+            // Update display
+            document.getElementById('consumedCalories').textContent = consumed;
+            document.getElementById('targetCalories').textContent = target;
+            document.getElementById('burnedCalories').textContent = burned;
+            document.getElementById('burnedCaloriesCard').textContent = burned + ' kcal';
+            document.getElementById('remainingCalories').textContent = remaining;
+
+            // Update circle progress
+            const percentage = (consumed / target) * 100;
+            const circumference = 282.6;
+            const offset = circumference - (percentage / 100 * circumference);
+            document.getElementById('calorieCircle').style.strokeDashoffset = offset;
+
+            // Load macros
+            const protein = { current: parseInt(localStorage.getItem('proteinCurrent')) || 80, target: 120 };
+            const carbs = { current: parseInt(localStorage.getItem('carbsCurrent')) || 150, target: 200 };
+            const fat = { current: parseInt(localStorage.getItem('fatCurrent')) || 40, target: 60 };
+
+            document.getElementById('proteinCurrent').textContent = protein.current;
+            document.getElementById('proteinBar').style.width = (protein.current / protein.target * 100) + '%';
+
+            document.getElementById('carbsCurrent').textContent = carbs.current;
+            document.getElementById('carbsBar').style.width = (carbs.current / carbs.target * 100) + '%';
+
+            document.getElementById('fatCurrent').textContent = fat.current;
+            document.getElementById('fatBar').style.width = (fat.current / fat.target * 100) + '%';
+
+            // Load weight data
+            const currentWeight = parseFloat(localStorage.getItem('currentWeight')) || 75;
+            const targetWeight = parseFloat(localStorage.getItem('targetWeight')) || 70;
+            const startWeight = parseFloat(localStorage.getItem('startWeight')) || 80;
+
+            document.getElementById('currentWeight').textContent = currentWeight + 'kg';
+            document.getElementById('targetWeight').textContent = targetWeight + 'kg';
+
+            const weightProgress = ((startWeight - currentWeight) / (startWeight - targetWeight)) * 100;
+            document.getElementById('weightProgress').style.width = Math.min(weightProgress, 100) + '%';
+
+            // Load water data
+            const waterCurrent = parseInt(localStorage.getItem('waterCurrent')) || 6;
+            document.getElementById('waterCurrent').textContent = waterCurrent;
+        }
+
+        // Initialize on page load
+        initializeUserData();
+    </script>
+</body>
+
+</html>

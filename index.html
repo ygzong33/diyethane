@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+
+<html class="light" lang="tr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Giriş Yap - Sağlıklı Yaşam Uygulaması</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <style>
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102216",
+                        "text-light": "#0d1b12",
+                        "text-dark": "#e7f3eb",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2c20",
+                        "input-light": "#e7f3eb",
+                        "input-dark": "#2a3d30",
+                        "placeholder-light": "#4c9a66",
+                        "placeholder-dark": "#94cda7"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="font-display">
+    <div class="relative flex min-h-screen w-full flex-col items-center bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden"
+        style='font-family: Inter, "Noto Sans", sans-serif;'>
+        <div class="flex flex-col items-center justify-center p-4 w-full max-w-md mx-auto">
+            <!-- App Logo -->
+            <div class="flex items-center justify-center pt-10 pb-6">
+                <span class="material-symbols-outlined text-primary text-5xl">
+                    eco
+                </span>
+            </div>
+            <!-- HeadlineText -->
+            <h1
+                class="text-text-light dark:text-text-dark tracking-tight text-3xl font-bold leading-tight text-center pb-2">
+                Sağlıklı Yaşama İlk Adımını At</h1>
+            <!-- BodyText -->
+            <p class="text-text-light/80 dark:text-text-dark/80 text-base font-normal leading-normal pb-8 text-center">
+                Hedeflerine bizimle ulaşmak için giriş yap veya yeni bir hesap oluştur.</p>
+            <!-- Email TextField -->
+            <div class="w-full px-0 py-2">
+                <label class="flex flex-col w-full">
+                    <p class="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2">E-posta</p>
+                    <input id="email"
+                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border-none bg-input-light dark:bg-input-dark h-14 placeholder:text-placeholder-light dark:placeholder:text-placeholder-dark p-4 text-base font-normal leading-normal"
+                        placeholder="E-posta adresinizi girin" type="email" value="" />
+                </label>
+            </div>
+            <!-- Password TextField -->
+            <div class="w-full px-0 py-2">
+                <label class="flex flex-col w-full">
+                    <div class="flex justify-between items-center pb-2">
+                        <p class="text-text-light dark:text-text-dark text-base font-medium leading-normal">Şifre</p>
+                        <a class="text-primary text-sm font-medium hover:underline" href="#">Şifremi Unuttum</a>
+                    </div>
+                    <div
+                        class="flex w-full flex-1 items-stretch rounded-lg bg-input-light dark:bg-input-dark focus-within:ring-2 focus-within:ring-primary/50">
+                        <input id="password"
+                            class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden text-text-light dark:text-text-dark focus:outline-0 focus:ring-0 border-none bg-transparent h-14 placeholder:text-placeholder-light dark:placeholder:text-placeholder-dark p-4 rounded-r-none border-r-0 pr-2 text-base font-normal leading-normal"
+                            placeholder="Şifrenizi girin" type="password" value="" />
+                        <button aria-label="Şifreyi göster/gizle" onclick="togglePassword()"
+                            class="text-placeholder-light dark:text-placeholder-dark flex items-center justify-center pr-4 rounded-r-lg border-l-0">
+                            <span id="eye-icon" class="material-symbols-outlined" data-icon="Eye" data-size="24px"
+                                data-weight="regular">visibility_off</span>
+                        </button>
+                    </div>
+                </label>
+            </div>
+            <!-- Primary CTA Button -->
+            <div class="w-full px-0 pt-6 pb-3">
+                <button onclick="login()"
+                    class="flex w-full items-center justify-center h-14 rounded-lg bg-primary text-background-dark text-base font-bold leading-normal transition-transform hover:scale-[1.02] active:scale-[0.98]">Giriş
+                    Yap</button>
+            </div>
+            <!-- Or Continue With Divider -->
+            <div class="flex items-center w-full gap-4 py-4">
+                <hr class="flex-1 border-t border-text-light/20 dark:border-text-dark/20" />
+                <p class="text-sm text-text-light/60 dark:text-text-dark/60">Veya şununla devam et:</p>
+                <hr class="flex-1 border-t border-text-light/20 dark:border-text-dark/20" />
+            </div>
+            <!-- Social Login Buttons -->
+            <div class="flex w-full gap-4 py-2">
+                <button onclick="socialLogin('google')"
+                    class="flex-1 flex items-center justify-center gap-2 h-12 rounded-lg bg-surface-light dark:bg-surface-dark border border-text-light/10 dark:border-text-dark/10 text-text-light dark:text-text-dark font-medium transition-transform hover:scale-[1.02] active:scale-[0.98]">
+                    <img alt="Google logo" class="w-5 h-5"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBG0PLdpur49MWPLKs3OnkmQJXa9pgnbQVjGo-ITk7XwLf30qPLwQwiBwabOn_YbBg3BzgXnKzCh1uACUhfljb2nCdNmTtEgSUQrvV5E3QhDmrNtkeUWG6gJQix8epKxqB9p7evmHQOKUCH4rxTI_yDONluUT9a8LdtvyblWIK54fhqzRIYICfxjIx7qusd2sTsX4zpbei39bB5YSex-_z1FZpr2Jiu6cL8Y32QB6BUrTGdpXdYlcEbzCM0zGxhHUXxfOEuEfJ22MRe" />
+                    Google
+                </button>
+                <button onclick="socialLogin('apple')"
+                    class="flex-1 flex items-center justify-center gap-2 h-12 rounded-lg bg-surface-light dark:bg-surface-dark border border-text-light/10 dark:border-text-dark/10 text-text-light dark:text-text-dark font-medium transition-transform hover:scale-[1.02] active:scale-[0.98]">
+                    <img alt="Apple logo" class="w-5 h-5 dark:invert"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBx40IxYWUe-ATeelaDPPZCmO67rANWeB9CuJEFCc4HlwXnyi1SvrGJftxSem7jTgZwcPgfrl_HNNnmPaDemI1mn6AznwTLHKZFoxAmVqyUirzZADmFXDl6c_jcaMl5Sqfz4UaecaWCR4XHCGU8olK-dv-tumBR6SjZqMcrO3Z0SydqzVQRpz-CmcBnxpXz_xnzkfZDBliyZ9d2OY6UBmfRCJ_xarvqOZwdamEDUBVD-jVAiMuvHNyCU-F1j7AmDGb9YolSZr1iu0GU" />
+                    Apple
+                </button>
+            </div>
+            <!-- Secondary CTA -->
+            <div class="flex items-center justify-center gap-2 pt-8 pb-4">
+                <p class="text-text-light/80 dark:text-text-dark/80">Hesabın yok mu?</p>
+                <a class="font-bold text-primary hover:underline" href="#" onclick="register(); return false;">Hesap
+                    Oluştur</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle password visibility
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eye-icon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.textContent = 'visibility';
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.textContent = 'visibility_off';
+            }
+        }
+
+        // Login function
+        function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (!email || !password) {
+                alert('Lütfen e-posta ve şifre giriniz.');
+                return;
+            }
+
+            // Save user info to localStorage
+            localStorage.setItem('userEmail', email);
+            localStorage.setItem('userName', email.split('@')[0]);
+            localStorage.setItem('isLoggedIn', 'true');
+
+            // Redirect to dashboard
+            window.location.href = 'dashboard.html';
+        }
+
+        // Social login function
+        function socialLogin(provider) {
+            // Simulate social login
+            localStorage.setItem('userEmail', `user@${provider}.com`);
+            localStorage.setItem('userName', `${provider} User`);
+            localStorage.setItem('isLoggedIn', 'true');
+
+            window.location.href = 'dashboard.html';
+        }
+
+        // Register function
+        function register() {
+            alert('Kayıt sayfası yakında eklenecek! Şimdilik giriş yapabilirsiniz.');
+        }
+
+        // Check if already logged in
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+            window.location.href = 'dashboard.html';
+        }
+    </script>
+</body>
+
+</html>

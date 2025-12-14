@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+
+<html class="light" lang="tr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Öğün Ekle</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102216",
+                        "text-light": "#0d1b12",
+                        "text-dark": "#e0f5e7",
+                        "card-light": "#ffffff",
+                        "card-dark": "#182c1e",
+                        "chip-light": "#e7f3eb",
+                        "chip-dark": "#253f2c",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24;
+            vertical-align: middle;
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+    <div class="relative flex h-auto min-h-screen w-full flex-col">
+        <!-- Top App Bar -->
+        <header
+            class="sticky top-0 z-10 flex items-center bg-background-light/80 dark:bg-background-dark/80 p-4 pb-2 backdrop-blur-sm">
+            <button onclick="window.location.href='dashboard.html'"
+                class="flex size-10 shrink-0 items-center justify-center rounded-full text-text-light dark:text-text-dark">
+                <span class="material-symbols-outlined text-2xl">arrow_back</span>
+            </button>
+            <h1
+                class="flex-1 text-center text-lg font-bold leading-tight tracking-[-0.015em] text-text-light dark:text-text-dark">
+                Öğün Ekle</h1>
+            <div class="size-10 shrink-0"></div> <!-- Spacer -->
+        </header>
+        <main class="flex flex-1 flex-col p-4 pt-2 pb-32">
+            <!-- Chips: Meal Type Selector -->
+            <div class="flex gap-3 overflow-x-auto pb-4 [-ms-overflow-style:none] [scrollbar-width:none]">
+                <div onclick="selectMealType('breakfast')"
+                    class="meal-chip flex h-10 shrink-0 cursor-pointer items-center justify-center gap-x-2 rounded-full bg-primary/20 dark:bg-primary/30 px-5"
+                    data-meal="breakfast">
+                    <p class="text-sm font-bold text-text-light dark:text-text-dark">Kahvaltı</p>
+                </div>
+                <div onclick="selectMealType('lunch')"
+                    class="meal-chip flex h-10 shrink-0 cursor-pointer items-center justify-center gap-x-2 rounded-full bg-chip-light dark:bg-chip-dark px-5"
+                    data-meal="lunch">
+                    <p class="text-sm font-medium text-text-light dark:text-text-dark">Öğle Yemeği</p>
+                </div>
+                <div onclick="selectMealType('dinner')"
+                    class="meal-chip flex h-10 shrink-0 cursor-pointer items-center justify-center gap-x-2 rounded-full bg-chip-light dark:bg-chip-dark px-5"
+                    data-meal="dinner">
+                    <p class="text-sm font-medium text-text-light dark:text-text-dark">Akşam Yemeği</p>
+                </div>
+                <div onclick="selectMealType('snack')"
+                    class="meal-chip flex h-10 shrink-0 cursor-pointer items-center justify-center gap-x-2 rounded-full bg-chip-light dark:bg-chip-dark px-5"
+                    data-meal="snack">
+                    <p class="text-sm font-medium text-text-light dark:text-text-dark">Atıştırmalık</p>
+                </div>
+            </div>
+            <!-- Card: AI Scan -->
+            <div class="@container">
+                <div
+                    class="mt-4 flex flex-col items-stretch justify-start rounded-xl bg-card-light dark:bg-card-dark shadow-[0_4px_12px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.1)] @xl:flex-row @xl:items-start">
+                    <div class="w-full flex-shrink-0 bg-center bg-no-repeat aspect-video bg-cover rounded-t-xl @xl:w-64 @xl:rounded-l-xl @xl:rounded-tr-none"
+                        alt="AI camera scanning food"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBOupgb_crOg2GYdiI3Awct3YDPTSzIpBc_vDyNGEszpL1rI3seihbRUhNadv1p6_36sJJx8NjWfvnP90Ku87AH0AXahJsFgP-yNk1uycMX-bJv_bxzM7p-rl70D_jaMEJ7QBNApYCq-Br0z9ln5f-iKj76dE6t_bKOOa4KwnnDri9lhbzST0Q-YwILrZ2rSJ9IAGqLP3tYDPWloZ98fWuEtBd-xqiFsJk2q8yj5gl0R3nKzUNOBVoYRHolLdQjLy7GK5Bu-v-g5T5z");'>
+                    </div>
+                    <div class="flex w-full min-w-72 grow flex-col items-stretch justify-center gap-3 p-5">
+                        <p
+                            class="text-lg font-bold leading-tight tracking-[-0.015em] text-text-light dark:text-text-dark">
+                            Yemeğini Yapay Zeka ile Tara</p>
+                        <p class="text-sm font-normal leading-normal text-text-light/70 dark:text-text-dark/70">
+                            Kalorileri anında tahmin etmek için fotoğrafını çek veya galeriden yükle.</p>
+                        <div class="mt-2 flex items-center gap-3">
+                            <button onclick="simulateCamera()"
+                                class="flex flex-1 min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-11 px-4 bg-primary text-text-light dark:text-background-dark text-sm font-bold leading-normal">
+                                <span class="material-symbols-outlined">photo_camera</span>
+                                <span class="truncate">Kamera</span>
+                            </button>
+                            <button onclick="simulateGallery()"
+                                class="flex flex-1 min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-11 px-4 bg-chip-light dark:bg-chip-dark text-text-light dark:text-text-dark text-sm font-bold leading-normal">
+                                <span class="material-symbols-outlined">photo_library</span>
+                                <span class="truncate">Galeri</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- SingleButton: Manual Add -->
+            <div class="mt-6 flex">
+                <button onclick="showManualEntry()"
+                    class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 px-5 flex-1 bg-chip-light dark:bg-chip-dark text-base font-bold leading-normal tracking-[0.015em] text-text-light dark:text-text-dark">
+                    <span class="truncate">Manuel Olarak Ekle</span>
+                </button>
+            </div>
+
+            <!-- Manual Entry Form (Hidden by default) -->
+            <div id="manualEntryForm"
+                class="hidden mt-6 flex flex-col gap-4 rounded-xl bg-card-light dark:bg-card-dark p-6 shadow-sm">
+                <h3 class="text-lg font-bold text-text-light dark:text-text-dark">Yemek Bilgilerini Gir</h3>
+                <div>
+                    <label class="text-sm font-medium text-text-light dark:text-text-dark">Yemek Adı</label>
+                    <input id="foodName" type="text" placeholder="Örn: Izgara Tavuk"
+                        class="w-full mt-2 px-4 py-3 rounded-lg bg-chip-light dark:bg-chip-dark text-text-light dark:text-text-dark border-none focus:ring-2 focus:ring-primary" />
+                </div>
+                <div>
+                    <label class="text-sm font-medium text-text-light dark:text-text-dark">Kalori (kcal)</label>
+                    <input id="foodCalories" type="number" placeholder="250"
+                        class="w-full mt-2 px-4 py-3 rounded-lg bg-chip-light dark:bg-chip-dark text-text-light dark:text-text-dark border-none focus:ring-2 focus:ring-primary" />
+                </div>
+                <div class="grid grid-cols-3 gap-3">
+                    <div>
+                        <label class="text-sm font-medium text-text-light dark:text-text-dark">Protein (g)</label>
+                        <input id="foodProtein" type="number" placeholder="30"
+                            class="w-full mt-2 px-4 py-3 rounded-lg bg-chip-light dark:bg-chip-dark text-text-light dark:text-text-dark border-none focus:ring-2 focus:ring-primary" />
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-text-light dark:text-text-dark">Karb. (g)</label>
+                        <input id="foodCarbs" type="number" placeholder="20"
+                            class="w-full mt-2 px-4 py-3 rounded-lg bg-chip-light dark:bg-chip-dark text-text-light dark:text-text-dark border-none focus:ring-2 focus:ring-primary" />
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-text-light dark:text-text-dark">Yağ (g)</label>
+                        <input id="foodFat" type="number" placeholder="10"
+                            class="w-full mt-2 px-4 py-3 rounded-lg bg-chip-light dark:bg-chip-dark text-text-light dark:text-text-dark border-none focus:ring-2 focus:ring-primary" />
+                    </div>
+                </div>
+                <button onclick="addManualFood()"
+                    class="mt-2 flex items-center justify-center h-12 rounded-lg bg-primary text-text-light dark:text-background-dark font-bold">
+                    Ekle
+                </button>
+            </div>
+
+            <!-- SectionHeader: Recently Added -->
+            <h2
+                class="text-text-light dark:text-text-dark text-[22px] font-bold leading-tight tracking-[-0.015em] pb-3 pt-8">
+                Son Eklenenler</h2>
+            <!-- List of recent items -->
+            <div id="recentFoods" class="flex flex-col gap-3">
+                <!-- List Item 1 -->
+                <div
+                    class="flex items-center gap-4 rounded-xl bg-card-light dark:bg-card-dark p-3 shadow-[0_2px_8px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
+                    <img class="size-14 shrink-0 rounded-lg object-cover" alt="Green salad"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4M4Xk2CyAy4e0-kiTfJZNlxUeDgTss8GxGF9zmkmYJQCyc-PAb3YHhdSIuzfX4pnoYYoxtl8pzXSH5pCGlICcCiG7Qm07eyyon-P6z7yAbCDPy24JVNAOC3QPwmykOEG2WESzS_Tu2X7lAon3oT_Crj0GtqNlf87hC4jPbFcsMaKqFFWxR5jrOed7u9GskZItDoJtp5Bg13iCaFIZB427UxZMOcXDom6RY1geiKoRGCzJQdd-bBndyeZ-Y8Pzm0l8AlFIptGDZpqv" />
+                    <div class="flex-grow">
+                        <p class="font-semibold text-text-light dark:text-text-dark">Yeşil Salata</p>
+                        <p class="text-sm text-text-light/60 dark:text-text-dark/60">1 Porsiyon, 150 kcal</p>
+                    </div>
+                    <button onclick="addQuickFood('Yeşil Salata', 150, 5, 20, 8)"
+                        class="flex h-9 w-9 items-center justify-center rounded-full bg-primary/20 dark:bg-primary/30 text-primary">
+                        <span class="material-symbols-outlined">add</span>
+                    </button>
+                </div>
+                <!-- List Item 2 -->
+                <div
+                    class="flex items-center gap-4 rounded-xl bg-card-light dark:bg-card-dark p-3 shadow-[0_2px_8px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
+                    <img class="size-14 shrink-0 rounded-lg object-cover" alt="Pizza slice"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsqS-Mk-w2Hs12HI9McW2n0BUjk18L4hfznq7H7o5sGyA2kjOPsI7NzxaJnqKuEjt9L61qZUP4odp3mvOPjQN7CyPGSD2_O-YDC_-2dyevIdITZl_yLH968ijIZlVx8PXItTqTvs9eap5JMXUT8rUbKyK-qf0OddeS2L-Egy5S3ZrrhKw6VJrDgLLpUvWBvTusJJVfE4_s0TLiQQpRvF44x3uYsAAiXmIypPjYHZFYsoafwX032itxpkhLsbPuCFztOhWFwRhM9sQH" />
+                    <div class="flex-grow">
+                        <p class="font-semibold text-text-light dark:text-text-dark">Margarita Pizza</p>
+                        <p class="text-sm text-text-light/60 dark:text-text-dark/60">1 Dilim, 285 kcal</p>
+                    </div>
+                    <button onclick="addQuickFood('Margarita Pizza', 285, 12, 35, 10)"
+                        class="flex h-9 w-9 items-center justify-center rounded-full bg-primary/20 dark:bg-primary/30 text-primary">
+                        <span class="material-symbols-outlined">add</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+        <!-- Sticky Bottom Bar -->
+        <footer
+            class="fixed bottom-0 left-0 right-0 z-10 bg-background-light/80 dark:bg-background-dark/80 p-4 backdrop-blur-sm">
+            <div
+                class="flex items-center justify-between rounded-xl bg-card-light dark:bg-card-dark p-4 shadow-lg dark:shadow-black/20">
+                <div>
+                    <p class="text-sm text-text-light/70 dark:text-text-dark/70">Toplam Kalori</p>
+                    <p id="totalCalories" class="text-2xl font-bold text-text-light dark:text-text-dark">0 kcal</p>
+                </div>
+                <button onclick="saveMeal()"
+                    class="flex min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-xl h-14 px-6 bg-primary text-text-light dark:text-background-dark text-base font-bold leading-normal">
+                    <span class="truncate">Öğünü Kaydet</span>
+                    <span class="material-symbols-outlined">arrow_forward</span>
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        let selectedMealType = 'breakfast';
+        let currentMealItems = [];
+        let totalCalories = 0;
+
+        // Check if user is logged in
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
+
+        function selectMealType(type) {
+            selectedMealType = type;
+
+            // Update chip styles
+            document.querySelectorAll('.meal-chip').forEach(chip => {
+                if (chip.dataset.meal === type) {
+                    chip.className = 'meal-chip flex h-10 shrink-0 cursor-pointer items-center justify-center gap-x-2 rounded-full bg-primary/20 dark:bg-primary/30 px-5';
+                    chip.querySelector('p').className = 'text-sm font-bold text-text-light dark:text-text-dark';
+                } else {
+                    chip.className = 'meal-chip flex h-10 shrink-0 cursor-pointer items-center justify-center gap-x-2 rounded-full bg-chip-light dark:bg-chip-dark px-5';
+                    chip.querySelector('p').className = 'text-sm font-medium text-text-light dark:text-text-dark';
+                }
+            });
+        }
+
+        function showManualEntry() {
+            const form = document.getElementById('manualEntryForm');
+            form.classList.toggle('hidden');
+        }
+
+        function simulateCamera() {
+            alert('📸 Kamera özelliği demo sürümünde aktif değil. Manuel ekleme kullanabilirsiniz!');
+        }
+
+        function simulateGallery() {
+            alert('🖼️ Galeri özelliği demo sürümünde aktif değil. Manuel ekleme kullanabilirsiniz!');
+        }
+
+        function addQuickFood(name, calories, protein, carbs, fat) {
+            addFoodToMeal(name, calories, protein, carbs, fat);
+        }
+
+        function addManualFood() {
+            const name = document.getElementById('foodName').value;
+            const calories = parseInt(document.getElementById('foodCalories').value) || 0;
+            const protein = parseInt(document.getElementById('foodProtein').value) || 0;
+            const carbs = parseInt(document.getElementById('foodCarbs').value) || 0;
+            const fat = parseInt(document.getElementById('foodFat').value) || 0;
+
+            if (!name || calories === 0) {
+                alert('Lütfen yemek adı ve kalori bilgisini girin!');
+                return;
+            }
+
+            addFoodToMeal(name, calories, protein, carbs, fat);
+
+            // Clear form
+            document.getElementById('foodName').value = '';
+            document.getElementById('foodCalories').value = '';
+            document.getElementById('foodProtein').value = '';
+            document.getElementById('foodCarbs').value = '';
+            document.getElementById('foodFat').value = '';
+
+            // Hide form
+            document.getElementById('manualEntryForm').classList.add('hidden');
+        }
+
+        function addFoodToMeal(name, calories, protein, carbs, fat) {
+            currentMealItems.push({ name, calories, protein, carbs, fat });
+            totalCalories += calories;
+
+            document.getElementById('totalCalories').textContent = totalCalories + ' kcal';
+
+            // Show success message
+            const message = document.createElement('div');
+            message.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 bg-primary text-white px-6 py-3 rounded-lg shadow-lg z-50';
+            message.textContent = `✓ ${name} eklendi!`;
+            document.body.appendChild(message);
+
+            setTimeout(() => {
+                message.remove();
+            }, 2000);
+        }
+
+        function saveMeal() {
+            if (currentMealItems.length === 0) {
+                alert('Lütfen en az bir yemek ekleyin!');
+                return;
+            }
+
+            // Get current values from localStorage
+            const consumed = parseInt(localStorage.getItem('consumedCalories')) || 0;
+            const proteinCurrent = parseInt(localStorage.getItem('proteinCurrent')) || 0;
+            const carbsCurrent = parseInt(localStorage.getItem('carbsCurrent')) || 0;
+            const fatCurrent = parseInt(localStorage.getItem('fatCurrent')) || 0;
+
+            // Calculate totals
+            let totalProtein = 0, totalCarbs = 0, totalFat = 0;
+            currentMealItems.forEach(item => {
+                totalProtein += item.protein;
+                totalCarbs += item.carbs;
+                totalFat += item.fat;
+            });
+
+            // Update localStorage
+            localStorage.setItem('consumedCalories', consumed + totalCalories);
+            localStorage.setItem('proteinCurrent', proteinCurrent + totalProtein);
+            localStorage.setItem('carbsCurrent', carbsCurrent + totalCarbs);
+            localStorage.setItem('fatCurrent', fatCurrent + totalFat);
+
+            // Save meal to history
+            const mealHistory = JSON.parse(localStorage.getItem('mealHistory') || '[]');
+            mealHistory.push({
+                type: selectedMealType,
+                items: currentMealItems,
+                totalCalories: totalCalories,
+                date: new Date().toISOString()
+            });
+            localStorage.setItem('mealHistory', JSON.stringify(mealHistory));
+
+            alert('✓ Öğün başarıyla kaydedildi!');
+            window.location.href = 'dashboard.html';
+        }
+    </script>
+</body>
+
+</html>

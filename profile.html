@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+<html class="light" lang="tr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Profil ve Ayarlar</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102216",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#182c1e",
+                        "text-primary-light": "#0d1b12",
+                        "text-primary-dark": "#e1f5e8",
+                        "text-secondary-light": "#4c9a66",
+                        "text-secondary-dark": "#8bc39d",
+                        "border-light": "#cfe7d7",
+                        "border-dark": "#2a4d35",
+                        "primary-subtle-light": "#e7f3eb",
+                        "primary-subtle-dark": "#1d3826"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-text-primary-light dark:text-text-primary-dark">
+    <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden pb-24">
+        <!-- Top App Bar -->
+        <div
+            class="flex items-center p-4 pb-2 justify-between sticky top-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm z-10">
+            <div class="flex size-12 shrink-0 items-center justify-start">
+                <button onclick="window.location.href='dashboard.html'">
+                    <span
+                        class="material-symbols-outlined text-text-primary-light dark:text-text-primary-dark">arrow_back</span>
+                </button>
+            </div>
+            <h2 class="text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Profil</h2>
+            <div class="flex size-12 shrink-0 items-center"></div>
+        </div>
+        <!-- Profile Header -->
+        <div class="flex p-4 @container">
+            <div class="flex w-full flex-col gap-4 items-center">
+                <div class="flex gap-4 flex-col items-center">
+                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full min-h-32 w-32"
+                        alt="User profile picture"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDg53a4hFROZ5kxxrMsC92FH3bEETvZpE_x71Y356w7ROTncXjV7x0xqNLxcNQpskmgmGuyvMMsM-3rDQMV18N__ASCLCtYD5RGZKmZ6aYhNJrMcWuFKK7A_geSk-Lvgm26hX4mscQUtuPDGN3js7-q-SiJbaswOpFvSdeFbsMCxPT60NCATY3jOa9-cqmxN9LjGoi6ZkRwC5SRslbXJmlqINRq1FRFQfrsgLU_W3QOy7N9J5JVgfql88hI0-zJIK85YXnwuGRLMzuc");'>
+                    </div>
+                    <div class="flex flex-col items-center justify-center">
+                        <p id="profileName" class="text-[22px] font-bold leading-tight tracking-[-0.015em] text-center">
+                            Kullanıcı</p>
+                        <p id="profileEmail"
+                            class="text-text-secondary-light dark:text-text-secondary-dark text-base font-normal leading-normal text-center">
+                            user@email.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Tabs -->
+        <div class="pb-3 sticky top-[60px] bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm z-10">
+            <div class="flex border-b border-border-light dark:border-border-dark px-4 justify-between">
+                <a class="tab-link flex flex-col items-center justify-center border-b-[3px] border-b-primary pb-[13px] pt-4 flex-1"
+                    href="#" data-tab="profile" onclick="switchTab('profile'); return false;">
+                    <p
+                        class="text-text-primary-light dark:text-text-primary-dark text-sm font-bold leading-normal tracking-[0.015em]">
+                        Profil</p>
+                </a>
+                <a class="tab-link flex flex-col items-center justify-center border-b-[3px] border-b-transparent pb-[13px] pt-4 flex-1"
+                    href="#" data-tab="goals" onclick="switchTab('goals'); return false;">
+                    <p
+                        class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-bold leading-normal tracking-[0.015em]">
+                        Hedefler</p>
+                </a>
+                <a class="tab-link flex flex-col items-center justify-center border-b-[3px] border-b-transparent pb-[13px] pt-4 flex-1"
+                    href="#" data-tab="settings" onclick="switchTab('settings'); return false;">
+                    <p
+                        class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-bold leading-normal tracking-[0.015em]">
+                        Ayarlar</p>
+                </a>
+            </div>
+        </div>
+
+        <!-- Tab Content: Profile -->
+        <div id="profileTab" class="tab-content flex flex-col gap-6 p-4">
+            <!-- Profile Info Section -->
+            <div class="flex flex-col gap-2">
+                <h3 class="text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2">Profil Bilgileri</h3>
+                <div class="flex flex-col bg-surface-light dark:bg-surface-dark rounded-xl overflow-hidden">
+                    <div
+                        class="flex items-center gap-4 px-4 min-h-[72px] py-2 justify-between border-b border-border-light dark:border-border-dark">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="flex items-center justify-center rounded-lg bg-primary-subtle-light dark:bg-primary-subtle-dark shrink-0 size-12">
+                                <span
+                                    class="material-symbols-outlined text-text-primary-light dark:text-text-primary-dark">badge</span>
+                            </div>
+                            <div class="flex flex-col justify-center">
+                                <p class="text-base font-medium leading-normal line-clamp-1">Ad Soyad</p>
+                                <p id="nameValue"
+                                    class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal line-clamp-2">
+                                    Kullanıcı</p>
+                            </div>
+                        </div>
+                        <div class="shrink-0"><span
+                                class="material-symbols-outlined text-text-secondary-light dark:text-text-secondary-dark">chevron_right</span>
+                        </div>
+                    </div>
+                    <div
+                        class="flex items-center gap-4 px-4 min-h-[72px] py-2 justify-between border-b border-border-light dark:border-border-dark">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="flex items-center justify-center rounded-lg bg-primary-subtle-light dark:bg-primary-subtle-dark shrink-0 size-12">
+                                <span
+                                    class="material-symbols-outlined text-text-primary-light dark:text-text-primary-dark">height</span>
+                            </div>
+                            <div class="flex flex-col justify-center">
+                                <p class="text-base font-medium leading-normal line-clamp-1">Boy</p>
+                                <p id="heightValue"
+                                    class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal line-clamp-2">
+                                    180 cm</p>
+                            </div>
+                        </div>
+                        <div class="shrink-0"><span
+                                class="material-symbols-outlined text-text-secondary-light dark:text-text-secondary-dark">chevron_right</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 px-4 min-h-[72px] py-2 justify-between">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="flex items-center justify-center rounded-lg bg-primary-subtle-light dark:bg-primary-subtle-dark shrink-0 size-12">
+                                <span
+                                    class="material-symbols-outlined text-text-primary-light dark:text-text-primary-dark">scale</span>
+                            </div>
+                            <div class="flex flex-col justify-center">
+                                <p class="text-base font-medium leading-normal line-clamp-1">Kilo</p>
+                                <p id="weightValue"
+                                    class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal line-clamp-2">
+                                    75 kg</p>
+                            </div>
+                        </div>
+                        <div class="shrink-0"><span
+                                class="material-symbols-outlined text-text-secondary-light dark:text-text-secondary-dark">chevron_right</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Content: Goals -->
+        <div id="goalsTab" class="tab-content hidden flex flex-col gap-6 p-4">
+            <div class="flex flex-col gap-4">
+                <h3 class="text-lg font-bold">Hedeflerim</h3>
+                <div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6">
+                    <div class="flex flex-col gap-4">
+                        <div>
+                            <label class="text-sm font-medium">Hedef Kilo (kg)</label>
+                            <input id="targetWeightInput" type="number"
+                                class="w-full mt-2 px-4 py-3 rounded-lg bg-primary-subtle-light dark:bg-primary-subtle-dark border-none focus:ring-2 focus:ring-primary"
+                                value="70" />
+                        </div>
+                        <div>
+                            <label class="text-sm font-medium">Günlük Kalori Hedefi</label>
+                            <input id="targetCalInput" type="number"
+                                class="w-full mt-2 px-4 py-3 rounded-lg bg-primary-subtle-light dark:bg-primary-subtle-dark border-none focus:ring-2 focus:ring-primary"
+                                value="2750" />
+                        </div>
+                        <div>
+                            <label class="text-sm font-medium">Su Tüketim Hedefi (bardak)</label>
+                            <input id="waterTargetInput" type="number"
+                                class="w-full mt-2 px-4 py-3 rounded-lg bg-primary-subtle-light dark:bg-primary-subtle-dark border-none focus:ring-2 focus:ring-primary"
+                                value="8" />
+                        </div>
+                        <button onclick="saveGoals()"
+                            class="mt-4 flex items-center justify-center h-12 rounded-lg bg-primary text-text-primary-light font-bold">
+                            Hedefleri Kaydet
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Content: Settings -->
+        <div id="settingsTab" class="tab-content hidden flex flex-col gap-6 p-4">
+            <div class="flex flex-col gap-2">
+                <h3 class="text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2">Uygulama Ayarları</h3>
+                <div class="flex flex-col bg-surface-light dark:bg-surface-dark rounded-xl overflow-hidden">
+                    <div
+                        class="flex items-center gap-4 px-4 min-h-[72px] py-2 justify-between border-b border-border-light dark:border-border-dark">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="flex items-center justify-center rounded-lg bg-primary-subtle-light dark:bg-primary-subtle-dark shrink-0 size-12">
+                                <span
+                                    class="material-symbols-outlined text-text-primary-light dark:text-text-primary-dark">notifications</span>
+                            </div>
+                            <div class="flex flex-col justify-center">
+                                <p class="text-base font-medium leading-normal line-clamp-1">Bildirimler</p>
+                                <p
+                                    class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal line-clamp-2">
+                                    Hatırlatıcılar ve motivasyon</p>
+                            </div>
+                        </div>
+                        <div class="shrink-0"><span class="material-symbols-outlined text-primary">toggle_on</span>
+                        </div>
+                    </div>
+                    <div
+                        class="flex items-center gap-4 px-4 min-h-[72px] py-2 justify-between border-b border-border-light dark:border-border-dark">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="flex items-center justify-center rounded-lg bg-primary-subtle-light dark:bg-primary-subtle-dark shrink-0 size-12">
+                                <span
+                                    class="material-symbols-outlined text-text-primary-light dark:text-text-primary-dark">dark_mode</span>
+                            </div>
+                            <div class="flex flex-col justify-center">
+                                <p class="text-base font-medium leading-normal line-clamp-1">Görünüm</p>
+                                <p
+                                    class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal line-clamp-2">
+                                    Karanlık Mod</p>
+                            </div>
+                        </div>
+                        <div class="shrink-0"><span
+                                class="material-symbols-outlined text-text-secondary-light dark:text-text-secondary-dark">toggle_off</span>
+                        </div>
+                    </div>
+                    <div onclick="window.location.href='rewards.html'"
+                        class="flex items-center gap-4 px-4 min-h-[72px] py-2 justify-between cursor-pointer hover:bg-primary-subtle-light dark:hover:bg-primary-subtle-dark">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="flex items-center justify-center rounded-lg bg-primary-subtle-light dark:bg-primary-subtle-dark shrink-0 size-12">
+                                <span
+                                    class="material-symbols-outlined text-text-primary-light dark:text-text-primary-dark">workspace_premium</span>
+                            </div>
+                            <div class="flex flex-col justify-center">
+                                <p class="text-base font-medium leading-normal line-clamp-1">Ödüllerim</p>
+                                <p
+                                    class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal line-clamp-2">
+                                    Kazandığın ödülleri gör</p>
+                            </div>
+                        </div>
+                        <div class="shrink-0"><span
+                                class="material-symbols-outlined text-text-secondary-light dark:text-text-secondary-dark">chevron_right</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="px-4 pt-4 pb-8">
+                <button onclick="logout()"
+                    class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-4 bg-red-500 text-white text-base font-bold leading-normal tracking-[0.015em] w-full">
+                    <span class="truncate">Çıkış Yap</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav
+            class="fixed bottom-0 left-0 right-0 z-10 flex h-20 items-center justify-around border-t border-gray-200 dark:border-gray-700 bg-surface-light dark:bg-surface-dark">
+            <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 hover:text-primary"
+                href="dashboard.html">
+                <span class="material-symbols-outlined">home</span>
+                <span class="text-xs">Anasayfa</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 hover:text-primary"
+                href="meal-add.html">
+                <span class="material-symbols-outlined">restaurant_menu</span>
+                <span class="text-xs">Yemek Ekle</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 hover:text-primary"
+                href="diet-plan.html">
+                <span class="material-symbols-outlined">bar_chart</span>
+                <span class="text-xs">İlerleme</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 text-primary" href="profile.html">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-xs font-bold">Profil</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
+
+        // Load user data
+        function loadUserData() {
+            const userName = localStorage.getItem('userName') || 'Kullanıcı';
+            const userEmail = localStorage.getItem('userEmail') || 'user@email.com';
+
+            document.getElementById('profileName').textContent = userName;
+            document.getElementById('profileEmail').textContent = userEmail;
+            document.getElementById('nameValue').textContent = userName;
+
+            const currentWeight = localStorage.getItem('currentWeight') || '75';
+            document.getElementById('weightValue').textContent = currentWeight + ' kg';
+
+            const targetWeight = localStorage.getItem('targetWeight') || '70';
+            document.getElementById('targetWeightInput').value = targetWeight;
+
+            const targetCal = localStorage.getItem('targetCalories') || '2750';
+            document.getElementById('targetCalInput').value = targetCal;
+
+            const waterTarget = localStorage.getItem('waterTarget') || '8';
+            document.getElementById('waterTargetInput').value = waterTarget;
+        }
+
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+
+            // Remove active state from all tab links
+            document.querySelectorAll('.tab-link').forEach(link => {
+                link.classList.remove('border-b-primary');
+                link.classList.add('border-b-transparent');
+                link.querySelector('p').classList.remove('text-text-primary-light', 'dark:text-text-primary-dark');
+                link.querySelector('p').classList.add('text-text-secondary-light', 'dark:text-text-secondary-dark');
+            });
+
+            // Show selected tab
+            const selectedTab = document.getElementById(tabName + 'Tab');
+            selectedTab.classList.remove('hidden');
+
+            // Add active state to selected tab link
+            const selectedLink = document.querySelector(`[data-tab="${tabName}"]`);
+            selectedLink.classList.add('border-b-primary');
+            selectedLink.classList.remove('border-b-transparent');
+            selectedLink.querySelector('p').classList.add('text-text-primary-light', 'dark:text-text-primary-dark');
+            selectedLink.querySelector('p').classList.remove('text-text-secondary-light', 'dark:text-text-secondary-dark');
+        }
+
+        function saveGoals() {
+            const targetWeight = document.getElementById('targetWeightInput').value;
+            const targetCal = document.getElementById('targetCalInput').value;
+            const waterTarget = document.getElementById('waterTargetInput').value;
+
+            localStorage.setItem('targetWeight', targetWeight);
+            localStorage.setItem('targetCalories', targetCal);
+            localStorage.setItem('waterTarget', waterTarget);
+
+            alert('✓ Hedefler başarıyla kaydedildi!');
+        }
+
+        function logout() {
+            if (confirm('Çıkış yapmak istediğinize emin misiniz?')) {
+                localStorage.clear();
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Initialize
+        loadUserData();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+
+<html class="light" lang="tr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Ödül Merkezi</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102216",
+                        "vibrant-green": "#4CAF50",
+                        "energetic-coral": "#FF7043",
+                        "charcoal": "#424242",
+                        "medium-gray": "#9E9E9E",
+                        "dark-text": "#0d1b12",
+                        "light-text": "#e0e0e0",
+                        "card-light": "#ffffff",
+                        "card-dark": "#1a2c20",
+                        "border-light": "#e0e0e0",
+                        "border-dark": "#3a4a3f",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display">
+    <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden pb-24">
+        <!-- Top App Bar -->
+        <div
+            class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10">
+            <div class="flex size-10 shrink-0 items-center justify-center text-charcoal dark:text-light-text">
+                <button onclick="window.location.href='profile.html'">
+                    <span class="material-symbols-outlined text-2xl">arrow_back</span>
+                </button>
+            </div>
+            <h1
+                class="text-charcoal dark:text-light-text text-xl font-bold leading-tight tracking-[-0.015em] flex-1 text-center">
+                Ödül Merkezi</h1>
+            <div class="flex size-10 shrink-0 items-center"></div>
+        </div>
+        <!-- User Points Card -->
+        <div class="p-4 @container">
+            <div
+                class="flex flex-col items-stretch justify-start rounded-xl @xl:flex-row @xl:items-start shadow-sm bg-vibrant-green/10 dark:bg-vibrant-green/20">
+                <div class="flex w-full min-w-72 grow flex-col items-stretch justify-center gap-1 p-5 @xl:px-4">
+                    <p
+                        class="text-charcoal dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex items-center gap-2">
+                        <span class="material-symbols-outlined text-energetic-coral text-3xl">workspace_premium</span>
+                        <span id="userPoints">1500</span> Puan
+                    </p>
+                    <div class="flex items-end gap-3 justify-between">
+                        <p class="text-medium-gray dark:text-gray-300 text-base font-normal leading-normal">Harika
+                            gidiyorsun! Ödülleri keşfetmeye devam et.</p>
+                        <button onclick="showPointsHistory()"
+                            class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 bg-vibrant-green text-white text-sm font-medium leading-normal">
+                            <span class="truncate">Geçmişi Görüntüle</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Tabs -->
+        <div class="pb-3 px-4">
+            <div class="flex border-b border-border-light dark:border-border-dark justify-between">
+                <a class="reward-tab flex flex-col items-center justify-center border-b-[3px] border-b-vibrant-green text-charcoal dark:text-light-text pb-[13px] pt-4 flex-1"
+                    href="#" data-tab="all" onclick="switchRewardTab('all'); return false;">
+                    <p class="text-sm font-bold leading-normal tracking-[0.015em]">Tüm Ödüller</p>
+                </a>
+                <a class="reward-tab flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-medium-gray dark:text-gray-400 pb-[13px] pt-4 flex-1"
+                    href="#" data-tab="my" onclick="switchRewardTab('my'); return false;">
+                    <p class="text-sm font-bold leading-normal tracking-[0.015em]">Kuponlarım</p>
+                </a>
+                <a class="reward-tab flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-medium-gray dark:text-gray-400 pb-[13px] pt-4 flex-1"
+                    href="#" data-tab="how" onclick="switchRewardTab('how'); return false;">
+                    <p class="text-sm font-bold leading-normal tracking-[0.015em]">Nasıl Kazanırım?</p>
+                </a>
+            </div>
+        </div>
+
+        <!-- Tab: All Rewards -->
+        <div id="allTab" class="reward-tab-content">
+            <!-- Section Header: Yeni Ödüller -->
+            <h3
+                class="text-charcoal dark:text-light-text text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
+                Yeni Ödüller</h3>
+            <!-- Horizontal Carousel for New Rewards -->
+            <div class="flex overflow-x-auto space-x-4 px-4 py-2 scrollbar-hide">
+                <!-- New Reward Card 1 -->
+                <div class="flex-shrink-0 w-72 bg-card-light dark:bg-card-dark rounded-xl shadow-sm overflow-hidden">
+                    <div class="h-32 bg-cover bg-center" alt="Healthy snacks"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBtiMiNRkgGTgdUV1JsQwSG7TtMKiviR5mM7D4rg2ULWk2mgHD5ehFemdMqskV0ugNwfz_0l8byNH6Y5y5Y5pryUPun0AzK7Y8rqAILMaDqTg-zD96b4nJjAn1k1e9M4F2hsj8gvQ3b1onSju-LhhZxnEheuEMMalo430YD5p9MjWpPsUO5HAdNCHSCvnqeMRFgkoO2dUunUaqF4OuXy0hhiqq08aDuQCgUyLBJQHGWFl_WCvhFkmxzCbyD82Ag-EeqdXTD3Co4u4sk');">
+                    </div>
+                    <div class="p-4">
+                        <p class="text-xs text-medium-gray dark:text-gray-400">Yeme-İçme</p>
+                        <h4 class="font-bold text-charcoal dark:text-light-text mt-1">Sağlıklı Atıştırmalık Paketi</h4>
+                        <p class="text-sm text-medium-gray dark:text-gray-300 mt-1">Lezzetli ve sağlıklı
+                            atıştırmalıklar.</p>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="text-vibrant-green font-bold">1200 Puan</span>
+                            <button onclick="redeemReward('Sağlıklı Atıştırmalık Paketi', 1200)"
+                                class="bg-vibrant-green text-white px-4 py-1.5 rounded-lg text-sm font-semibold">Kodu
+                                Al</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- New Reward Card 2 -->
+                <div class="flex-shrink-0 w-72 bg-card-light dark:bg-card-dark rounded-xl shadow-sm overflow-hidden">
+                    <div class="h-32 bg-cover bg-center" alt="Sportswear"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBfpNpe7mSZRj5mappKMZg4QlreDzORMFLCLkst4gx1Yy6Hiefb2fi4IuAU7gAd7mDwxVm3ajxFcv98ixbzcgsqJsI1Z08TLniUDu5E1v1laCtU8qdv7VBdRBacePWQVw6FhS_PtyHdiIYqT0lAYg9Bqmoxe5J4OB5Fy1VUqEdY_zs-jEER3UxMf95n35EYIzpUDm28Uu4MzFYPgPnNM26Crh5VpPINjjC2EdLP_0_LCu4CrxHDzcAc9j6xIbr8xxo_EoDi_Re0ECo4');">
+                    </div>
+                    <div class="p-4">
+                        <p class="text-xs text-medium-gray dark:text-gray-400">Spor</p>
+                        <h4 class="font-bold text-charcoal dark:text-light-text mt-1">Spor Giyimde %25 İndirim</h4>
+                        <p class="text-sm text-medium-gray dark:text-gray-300 mt-1">Antrenmanına stil kat.</p>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="text-vibrant-green font-bold">2000 Puan</span>
+                            <button onclick="redeemReward('Spor Giyimde %25 İndirim', 2000)"
+                                class="bg-vibrant-green text-white px-4 py-1.5 rounded-lg text-sm font-semibold">Kodu
+                                Al</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- New Reward Card 3 -->
+                <div class="flex-shrink-0 w-72 bg-card-light dark:bg-card-dark rounded-xl shadow-sm overflow-hidden">
+                    <div class="h-32 bg-cover bg-center" alt="Beauty products"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB_UHlUHIm8ClMx1JU52SNAlWE5-bV2LNF-6ps4otFDAyuLjIITr6nmvXnijdldfRIkLODoif5e8eC-AXwoM7ywuXTtXTVwfiP7Pz8Ols6F86Mmh-trcEBgtJnfY_cpynOkhLsSZS9p9f2f8aKcXUNVCU0R0IeldwwE5o4oevDpqeZyNazcf9piOQjWrcbcMso7JC_rLmCy9MGKnSBxAj-cCWbwozKJzMUp6ECfItjmxVnANAxYt6aYNbBMBuZLntU8_8daycVm505A');">
+                    </div>
+                    <div class="p-4">
+                        <p class="text-xs text-medium-gray dark:text-gray-400">Güzellik &amp; Bakım</p>
+                        <h4 class="font-bold text-charcoal dark:text-light-text mt-1">Organik Cilt Bakım Seti</h4>
+                        <p class="text-sm text-medium-gray dark:text-gray-300 mt-1">Cildini doğallıkla yenile.</p>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="text-vibrant-green font-bold">1500 Puan</span>
+                            <button onclick="redeemReward('Organik Cilt Bakım Seti', 1500)"
+                                class="bg-vibrant-green text-white px-4 py-1.5 rounded-lg text-sm font-semibold">Kodu
+                                Al</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Section Header: Diğer Ödüller -->
+            <h3
+                class="text-charcoal dark:text-light-text text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-6">
+                Diğer Ödüller</h3>
+            <!-- Vertical Grid for All Rewards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">
+                <!-- Reward Card 1 -->
+                <div class="bg-card-light dark:bg-card-dark rounded-xl shadow-sm overflow-hidden">
+                    <div class="h-36 bg-cover bg-center" alt="Smoothie"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCaSb2Mh89bSL0R9c7DZFDXodEJyvCZcB6dWlIldeV1gcKhw7bh1OYyO9p7OHBS83I84JWIishzvMgbjlkpWiEiqPbHhtbm-ilWEuEYKjnzx4i_PCF9KA3LYdB0uNMKMOHVdEREXVNzt_YOn-QTYB0uNv7erjxGytzNjpZuuMjEnuWndri9Z_O5facOONHoeVzFyeGE7ewHbxAq-72qaet8XqIIVlQsNSlDwac3Zzme68zdliV4TBAJgz2AAYlL6GY-YWZuHCflRtE8');">
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-bold text-charcoal dark:text-light-text">Vitamin Bar'da %15 İndirim</h4>
+                        <p class="text-sm text-medium-gray dark:text-gray-300 mt-1">Taze sıkılmış meyve suları ve
+                            smoothie'ler.</p>
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 my-3">
+                            <div class="bg-energetic-coral h-2.5 rounded-full" style="width: 75%"></div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-medium-gray dark:text-gray-400 text-sm">Hedef: 1000 Puan</span>
+                            <button
+                                class="bg-energetic-coral/30 text-energetic-coral px-4 py-1.5 rounded-lg text-sm font-semibold">750
+                                Puan</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Reward Card 2 -->
+                <div class="bg-card-light dark:bg-card-dark rounded-xl shadow-sm overflow-hidden">
+                    <div class="h-36 bg-cover bg-center" alt="Running shoes"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA_hS-mMa4DXvjzAm1jlK2MEcncnML_rSCakFFaNKAXfLiGYEUGr7xuG7qx4_Ui5TVsDYDEIUp1oJjalmZZdQM8ClgSqaXJSWjera9nafXEzUAyv7PwJanDA7PO8oS2DanRm8inPrjpIr4cHQvWB9JhC3VAbCngNiJN6UNjlsxEEn5HoqbXjVFPCq0BFwry_2qhKlkx1TtABH0ShE15o8_Fa6dV0Br1Mvh4W-U1VL1SMZJt3MJOEdgvcWtqbw8x2op1VV4-9DCTq0SC');">
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-bold text-charcoal dark:text-light-text">Koşu Ayakkabısında 50 TL İndirim</h4>
+                        <p class="text-sm text-medium-gray dark:text-gray-300 mt-1">Performansını artıracak ayakkabılar.
+                        </p>
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 my-3">
+                            <div class="bg-energetic-coral h-2.5 rounded-full" style="width: 40%"></div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-medium-gray dark:text-gray-400 text-sm">Hedef: 2500 Puan</span>
+                            <button
+                                class="bg-gray-300 dark:bg-gray-600 text-charcoal dark:text-light-text px-4 py-1.5 rounded-lg text-sm font-semibold cursor-not-allowed">Yetersiz
+                                Puan</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: My Coupons -->
+        <div id="myTab" class="reward-tab-content hidden">
+            <div class="p-4">
+                <div id="myCoupons" class="flex flex-col gap-4">
+                    <p class="text-center text-medium-gray dark:text-gray-400 py-8">Henüz kupon kazanmadınız. Puan
+                        toplayarak ödülleri kazanın!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: How to Earn -->
+        <div id="howTab" class="reward-tab-content hidden">
+            <div class="p-4 flex flex-col gap-6">
+                <div class="bg-card-light dark:bg-card-dark rounded-xl p-6">
+                    <h3 class="text-lg font-bold text-charcoal dark:text-light-text mb-4">Nasıl Puan Kazanırım?</h3>
+                    <div class="flex flex-col gap-4">
+                        <div class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-vibrant-green text-2xl">restaurant_menu</span>
+                            <div>
+                                <p class="font-semibold text-charcoal dark:text-light-text">Öğün Ekle</p>
+                                <p class="text-sm text-medium-gray dark:text-gray-300">Her öğün eklediğinde 10 puan
+                                    kazan</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-vibrant-green text-2xl">water_drop</span>
+                            <div>
+                                <p class="font-semibold text-charcoal dark:text-light-text">Su İç</p>
+                                <p class="text-sm text-medium-gray dark:text-gray-300">Günlük su hedefine ulaş, 20 puan
+                                    kazan</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-vibrant-green text-2xl">check_circle</span>
+                            <div>
+                                <p class="font-semibold text-charcoal dark:text-light-text">Hedefine Ulaş</p>
+                                <p class="text-sm text-medium-gray dark:text-gray-300">Günlük kalori hedefine ulaş, 50
+                                    puan kazan</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span
+                                class="material-symbols-outlined text-vibrant-green text-2xl">local_fire_department</span>
+                            <div>
+                                <p class="font-semibold text-charcoal dark:text-light-text">Seri Yap</p>
+                                <p class="text-sm text-medium-gray dark:text-gray-300">7 gün üst üste hedefine ulaş, 200
+                                    puan kazan</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav
+            class="fixed bottom-0 left-0 right-0 z-10 flex h-20 items-center justify-around border-t border-gray-200 dark:border-gray-700 bg-card-light dark:bg-card-dark">
+            <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 hover:text-primary"
+                href="dashboard.html">
+                <span class="material-symbols-outlined">home</span>
+                <span class="text-xs">Anasayfa</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 hover:text-primary"
+                href="meal-add.html">
+                <span class="material-symbols-outlined">restaurant_menu</span>
+                <span class="text-xs">Yemek Ekle</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 hover:text-primary"
+                href="diet-plan.html">
+                <span class="material-symbols-outlined">bar_chart</span>
+                <span class="text-xs">İlerleme</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 hover:text-primary"
+                href="profile.html">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-xs">Profil</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
+
+        let userPoints = parseInt(localStorage.getItem('userPoints')) || 1500;
+        document.getElementById('userPoints').textContent = userPoints;
+
+        function switchRewardTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.reward-tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+
+            // Remove active state from all tab links
+            document.querySelectorAll('.reward-tab').forEach(link => {
+                link.classList.remove('border-b-vibrant-green', 'text-charcoal', 'dark:text-light-text');
+                link.classList.add('border-b-transparent', 'text-medium-gray', 'dark:text-gray-400');
+            });
+
+            // Show selected tab
+            document.getElementById(tabName + 'Tab').classList.remove('hidden');
+
+            // Add active state to selected tab link
+            const selectedLink = document.querySelector(`[data-tab="${tabName}"]`);
+            selectedLink.classList.add('border-b-vibrant-green', 'text-charcoal', 'dark:text-light-text');
+            selectedLink.classList.remove('border-b-transparent', 'text-medium-gray', 'dark:text-gray-400');
+        }
+
+        function redeemReward(name, points) {
+            if (userPoints < points) {
+                alert('❌ Yetersiz puan! Daha fazla puan kazanmak için hedeflerine ulaşmaya devam et.');
+                return;
+            }
+
+            if (confirm(`${name} ödülünü ${points} puan karşılığında almak istiyor musunuz?`)) {
+                userPoints -= points;
+                localStorage.setItem('userPoints', userPoints);
+                document.getElementById('userPoints').textContent = userPoints;
+
+                // Save coupon
+                const coupons = JSON.parse(localStorage.getItem('myCoupons') || '[]');
+                coupons.push({
+                    name: name,
+                    code: 'DIET' + Math.random().toString(36).substr(2, 8).toUpperCase(),
+                    date: new Date().toISOString()
+                });
+                localStorage.setItem('myCoupons', JSON.stringify(coupons));
+
+                alert(`✓ Tebrikler! ${name} ödülünü kazandınız! Kupon kodunuz "Kuponlarım" sekmesinde.`);
+                loadMyCoupons();
+            }
+        }
+
+        function loadMyCoupons() {
+            const coupons = JSON.parse(localStorage.getItem('myCoupons') || '[]');
+            const container = document.getElementById('myCoupons');
+
+            if (coupons.length === 0) {
+                container.innerHTML = '<p class="text-center text-medium-gray dark:text-gray-400 py-8">Henüz kupon kazanmadınız. Puan toplayarak ödülleri kazanın!</p>';
+            } else {
+                container.innerHTML = coupons.map(coupon => `
+                <div class="bg-card-light dark:bg-card-dark rounded-xl p-4 shadow-sm">
+                    <h4 class="font-bold text-charcoal dark:text-light-text">${coupon.name}</h4>
+                    <p class="text-sm text-medium-gray dark:text-gray-300 mt-1">Kupon Kodu: <span class="font-mono font-bold text-vibrant-green">${coupon.code}</span></p>
+                    <p class="text-xs text-medium-gray dark:text-gray-400 mt-2">${new Date(coupon.date).toLocaleDateString('tr-TR')}</p>
+                </div>
+            `).join('');
+            }
+        }
+
+        function showPointsHistory() {
+            alert('📊 Puan geçmişi özelliği yakında eklenecek!');
+        }
+
+        // Load coupons on page load
+        loadMyCoupons();
+    </script>
+</body>
+
+</html>
